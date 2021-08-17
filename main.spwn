@@ -1,0 +1,34 @@
+let program = "(print (+ 1234 1))"
+
+lex = (program) {
+    let i_program = @regex::new("\\(").replace(program, " ( ")
+    i_program = @regex::new("\\)").replace(program, " ) ")
+    i_program = i_program.split(' ')
+    i_program.remove(0)
+    i_program.remove(i_program.length)
+    return i_program
+}
+
+rft = (tokens) {
+    let i_tokens = tokens
+    let token = i_tokens.pop()
+    $.print(token)
+    if token == '(' {
+        $.print(token)
+        L = []
+        while tokens[0] != ')' {
+            $.print(token)
+            L.append(rft(i_tokens))
+        }
+        i_tokens.pop()
+        return L
+    } else if token == ')' {
+        $.print(token)
+        $.print("unexpected )")
+        return
+    }
+    $.print(token)
+    return token
+}
+
+$.print(rft(lex(program)))
