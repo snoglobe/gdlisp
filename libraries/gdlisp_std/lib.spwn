@@ -81,7 +81,7 @@ let env = {}
     }
 
     env['max'] = (args) {
-        return $.min(args[0], args[1])
+        return $.max(args[0], args[1])
     }
 
     env['round'] = (args) {
