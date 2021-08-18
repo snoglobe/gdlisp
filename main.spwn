@@ -1,34 +1,114 @@
-let program = "(print (+ 1234 1))"
+let program = $.get_input('gdlisp) ')
+
+let env = {}
+
+env['+'] = (args) {
+    return args[0] + args[1]
+}
+
+env['-'] = (args) {
+    return args[0] - args[1]
+}
+
+env['*'] = (args) {
+    return args[0] * args[1]
+}
+
+env['/'] = (args) {
+    return args[0] / args[1]
+}
+
+env['>'] = (args) {
+    return args[0] > args[1]
+}
+
+env['<'] = (args) {
+    return args[0] < args[1]
+}
+
+env['>='] = (args) {
+    return args[0] >= args[1]
+}
+
+env['<='] = (args) {
+    return args[0] <= args[1]
+}
+
+env['='] = (args) {
+    return args[0] == args[1]
+}
+
+env['print'] = (args) {
+    $.print(args[0])
+}
+
+atom = (val) {
+    if @regex::new("^[0-9]").match(val) {
+        return @number(val)
+    } else {
+        return @string(val)
+    }
+}
 
 lex = (program) {
     let i_program = @regex::new("\\(").replace(program, " ( ")
-    i_program = @regex::new("\\)").replace(program, " ) ")
+    i_program = @regex::new("\\)").replace(i_program, " ) ")
     i_program = i_program.split(' ')
     i_program.remove(0)
-    i_program.remove(i_program.length)
+    i_program.pop()
+    while i_program.index('') != null {
+        i_program.remove(i_program.index(''))
+    }
     return i_program
 }
 
+let i_tokens = []
+
 rft = (tokens) {
-    let i_tokens = tokens
-    let token = i_tokens.pop()
-    $.print(token)
+    i_tokens = tokens
+    let token = i_tokens.remove(0)
     if token == '(' {
-        $.print(token)
-        L = []
-        while tokens[0] != ')' {
-            $.print(token)
-            L.append(rft(i_tokens))
+        let l = []
+        while i_tokens[0] != ')' {
+            l.push(rft(i_tokens))
         }
-        i_tokens.pop()
-        return L
+        i_tokens.remove(0)
+        return l
     } else if token == ')' {
-        $.print(token)
-        $.print("unexpected )")
-        return
+        $.print('unexpected )')
+    } else {
+        return atom(token)
     }
-    $.print(token)
-    return token
 }
 
-$.print(rft(lex(program)))
+eval = (exp, env) {
+    if exp.type == @string {
+        return env[exp]
+    } else if exp.type == @number {
+        return exp
+    } else if exp[0] == "if"{ 
+        let test = exp[1]
+        let conseq = exp[2]
+        let alt = exp[3]
+        let exep = null
+        if eval(test, env) {
+            exep = conseq
+        } else {
+            exep = alt
+        }
+        return eval(exep, env)
+    } else if exp[0] == "define" {
+        let symbol = exp[1]
+        let exep = exp[2]
+        env[symbol] = eval(exepm, env)
+    } else {
+        let proc = eval(exp[0], env)
+        let args = []
+        for arg in exp[1:] {
+            args.push(eval(arg, env))
+        }
+        return proc(args)
+    }
+}
+
+$.print(eval(rft(lex(program)), env))
