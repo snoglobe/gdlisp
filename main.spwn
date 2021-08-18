@@ -1,46 +1,5 @@
 let program = $.get_input('gdlisp) ')
-
-let env = {}
-
-env['+'] = (args) {
-    return args[0] + args[1]
-}
-
-env['-'] = (args) {
-    return args[0] - args[1]
-}
-
-env['*'] = (args) {
-    return args[0] * args[1]
-}
-
-env['/'] = (args) {
-    return args[0] / args[1]
-}
-
-env['>'] = (args) {
-    return args[0] > args[1]
-}
-
-env['<'] = (args) {
-    return args[0] < args[1]
-}
-
-env['>='] = (args) {
-    return args[0] >= args[1]
-}
-
-env['<='] = (args) {
-    return args[0] <= args[1]
-}
-
-env['='] = (args) {
-    return args[0] == args[1]
-}
-
-env['print'] = (args) {
-    $.print(args[0])
-}
+let env = import gdlisp_std
 
 atom = (val) {
     if @regex::new("^[0-9]").match(val) {

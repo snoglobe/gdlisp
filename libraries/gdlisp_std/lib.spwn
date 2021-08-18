@@ -1,0 +1,100 @@
+let env = {}
+
+    env['+'] = (args) {
+        return args[0] + args[1]
+    }
+
+    env['-'] = (args) {
+        return args[0] - args[1]
+    }
+
+    env['*'] = (args) {
+        return args[0] * args[1]
+    }
+
+    env['/'] = (args) {
+        return args[0] / args[1]
+    }
+
+    env['>'] = (args) {
+        return args[0] > args[1]
+    }
+
+    env['<'] = (args) {
+        return args[0] < args[1]
+    }
+
+    env['>='] = (args) {
+        return args[0] >= args[1]
+    }
+
+    env['<='] = (args) {
+        return args[0] <= args[1]
+    }
+
+    env['='] = (args) {
+        return args[0] == args[1]
+    }
+
+    env['print'] = (args) {
+        $.print(args[0])
+    }
+
+    env['sin'] = (args) {
+        return $.sin(args[0])
+    }
+
+    env['cos'] = (args) {
+        return $.cos(args[0])
+    }
+
+    env['tan'] = (args) {
+        return $.tan(args[0])
+    }
+
+    env['asin'] = (args) {
+        return $.asin(args[0])
+    }
+
+    env['acos'] = (args) {
+        return $.acos(args[0])
+    }
+
+    env['atan'] = (args) {
+        return $.atan(args[0])
+    }
+
+    env['floor'] = (args) {
+        return $.floor(args[0])
+    }
+
+    env['ceil'] = (args) {
+        return $.ceil(args[0])
+    }
+
+    env['abs'] = (args) {
+        return $.abs(args[0])
+    }
+
+    env['min'] = (args) {
+        return $.min(args[0], args[1])
+    }
+
+    env['max'] = (args) {
+        return $.min(args[0], args[1])
+    }
+
+    env['round'] = (args) {
+        return $.round(args[0])
+    }
+
+    env['append'] = (args) {
+        return $.append(args[0], args[1])
+    }
+
+    env['len'] = (args) {
+        return args[0].length
+    }
+
+
+return env
